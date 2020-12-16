@@ -7,21 +7,26 @@ import pandas as pd
 #start_time=time.process_time()
 
 # Parameters
+heatorcool = 'heat'
+comfortZone_upper = 24.0
+comfortZone_lower = 20.0
+
 timestep = 5*60
-comfortZone_upper = 23.0
-comfortZone_lower = 18.0
-n=3 # number of timesteps; in future can determine from size of T_oudoor matrix
 
 # Constants for indoor temperature equation
 c1 = 2.04*10**-5
-c2 = -1.50*10**-3
+# c2 = 1.50*10**-3 #sign depends on heat or cool
 c3 = 1.20*10**-6
 d1 = 1007
 d2 = -907
 d3 = -181
 d4 = -0.434
 
-heatorcool = 'cool'
+if heatorcool == 'heat':
+	c2 = 1.50*10**-3
+else:
+	c2 = -1.50*10**-3
+
 
 n=48
 x=variable(n)
