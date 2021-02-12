@@ -14,25 +14,25 @@ comfortZone_lower = 20.0
 timestep = 5*60
 
 # Constants for indoor temperature equation
-c1 = 2.04*10**-5
+c1 = 1.1473*10**-5
 # c2 = 1.50*10**-3 #sign depends on heat or cool
-c3 = 1.20*10**-6
+c3 = 3.2393*10**-7
 d1 = 1007
 d2 = -907
 d3 = -181
 d4 = -0.434
 
 if heatorcool == 'heat':
-	c2 = 1.50*10**-3
+	c2 = 0.0011
 else:
-	c2 = -1.50*10**-3
+	c2 = -0.0011
 
 
 n=48
 x=variable(n)
 
 # Data from EnergyPlus
-temp_indoor_initial = 23.0
+temp_indoor_initial = 20.0
 #temp_outdoor = matrix([21.1,21.333334,21.566668,21.799999,22.033333,22.266666,22.5,22.733334,22.966667,23.200001,23.433332,23.666666,23.9,24.041666,24.183332,24.325001,24.466667,24.608334,24.75,24.891666,25.033333,25.174999,25.316668,25.458334,25.6,25.825001,26.049999,26.275,26.5,26.725,26.950001,27.174999,27.4,27.625,27.85,28.075001,28.299999,28.166666,28.033333,27.9,27.766666,27.633333,27.5,27.366667,27.233334,27.1,26.966667,26.833334,26.700001])
 df = pd.read_excel('OutdoorTemp.xlsx', sheet_name='Sheet1')
 # print(len(df))
@@ -182,6 +182,10 @@ for ii in range(0,24):
 
 
 print(Output)
+with pd.ExcelWriter('OutdoorTemp.xlsx', mode ='a') as writer:
+#	Output.to_excel(writer, sheet_name = 'Sheet2')
+	df = pd.DataFrame(Output).T
+	df.to_excel(writer, sheet_name = 'Sheet2')
 print("Total price =") 
 print(cost)
 # print("Thermostat setup =") 
